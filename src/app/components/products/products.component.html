@@ -1,0 +1,16 @@
+
+<div>
+    total items {{myShoppingCart.length}}
+    total price {{total | currency}}
+</div>
+
+<div class="products--grid">
+    <app-product *ngFor="let product of productos" [product]="product" (addedProduct)="onAddToShoppingCart($event)" (showProduct)="showProductDetailInfo($event)"></app-product>
+</div>
+
+<div class="product-detail" [class.active]="showProductDetail" *ngIf="productChoosen">
+    <div>
+        <button (click)="toggleProductDetail()">close</button>
+        {{productChoosen.title}}
+    </div>
+</div>

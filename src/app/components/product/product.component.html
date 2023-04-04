@@ -1,0 +1,7 @@
+<div class="product--card">
+    <img [src]="product.images[0]" alt="" width="200" height="200">
+    <h2> {{product.title}}</h2>
+    <p>{{product.price | currency}}</p>
+    <button (click)="onAddToCart()">Add to cart</button>
+    <button (click)="showDetail()">more detail</button>
+</div>
