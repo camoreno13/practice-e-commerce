@@ -7,7 +7,10 @@ import { ProductComponent } from './components/product/product.component';
 import { ProductsComponent } from './components/products/products.component';
 import { HeaderComponent } from './components/header/header.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule , HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginComponent } from './components/login/login.component';
+import { TimeInterceptor } from './interceptors/time.interceptor';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -15,9 +18,13 @@ import { HttpClientModule } from '@angular/common/http';
     ProductComponent,
     ProductsComponent,
     HeaderComponent,
+    LoginComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-  providers: [],
+  providers: [
+    {provide : HTTP_INTERCEPTORS , useClass : TimeInterceptor, multi : true},
+    {provide : HTTP_INTERCEPTORS , useClass : TokenInterceptor , multi : true}
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

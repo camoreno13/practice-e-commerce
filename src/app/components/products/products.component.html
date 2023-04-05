@@ -1,4 +1,4 @@
-
+<button (click)="createNewProduct()">TESTING </button>
 <div>
     total items {{myShoppingCart.length}}
     total price {{total | currency}}
@@ -11,6 +11,7 @@
 <div class="product-detail" [class.active]="showProductDetail" *ngIf="productChoosen">
     <div>
         <button (click)="toggleProductDetail()">close</button>
-        {{productChoosen.title}}
+        <p>{{productChoosen.title}}</p>
+        <button (click)="updateProduct()"> edit </button>
     </div>
 </div>

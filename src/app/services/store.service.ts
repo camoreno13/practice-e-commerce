@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../models/product.model';
+import { CreateProductDTO, Product, UpdateProductDto } from '../models/product.model';
 import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject } from 'rxjs'
-
-
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,8 @@ export class StoreService {
   // patron observador
   myCart$ = this.myCart.asObservable()
 
-  apiUrl = 'https://young-sands-07814.herokuapp.com/api/products'
+  apiUrl = `${environment.API_URL}/api/products`
+  
   constructor(private http : HttpClient) { }
 
   getAllProducts(){
@@ -38,5 +38,14 @@ export class StoreService {
 
   getProduct(id : string){
     return this.http.get<Product>(`${this.apiUrl}/${id}`)
+  }
+
+  createProduct(dto : CreateProductDTO){
+    return this.http.post<Product>(this.apiUrl , dto)
+  }
+
+  update(id : string , dto : UpdateProductDto ){
+    // return this.http.put(`${this.apiUrl}/${id}` , dto ); // enviar todo el producto
+    return this.http.put<Product>(`${this.apiUrl}/${id}` , dto); // enviar solo lo que se quiere modificar
   }
 }
