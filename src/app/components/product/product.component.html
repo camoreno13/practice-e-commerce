@@ -1,7 +1,9 @@
 <div class="product--card">
-    <img [src]="product.images[0]" alt="" width="200" height="200">
+    <a [routerLink]="['/product' , product.id]">
+        <img [src]="product.images[0]" alt="" width="200" height="200">
+    </a>
     <h2> {{product.title}}</h2>
     <p>{{product.price | currency}}</p>
     <button (click)="onAddToCart()">Add to cart</button>
-    <button (click)="showDetail()">more detail</button>
+    <button routerLink="/home" [queryParams]="{product : product.id}">more detail</button>
 </div>

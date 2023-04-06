@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from 'src/app/models/product.model';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
@@ -10,6 +11,7 @@ export class HeaderComponent implements OnInit {
 
   activeMenu = false 
   counter = 0
+  categories : Category[] = []
 
   constructor(private storeService : StoreService) { }
 
@@ -17,13 +19,20 @@ export class HeaderComponent implements OnInit {
     this.storeService.myCart$.subscribe(products => {
       this.counter = products.length
     });
-
-    console.log("counter : " , this.counter)
+    this.getAllCategories();
   }
 
   toggleMenu(){
     console.log("entro")
     this.activeMenu = !this.activeMenu
   }
+
+  getAllCategories(){
+    this.storeService.getAllCategories().subscribe( data => {
+      console.log("categoria " , data)
+      this.categories = data
+    })
+  }
+
 
 }

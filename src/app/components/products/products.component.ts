@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   CreateProductDTO,
   Product,
@@ -27,18 +27,27 @@ export class ProductsComponent implements OnInit {
     },
   };
 
-  public productos: Product[] = [];
 
+  // public productos: Product[] = []; refactoring
+  @Input() productos: Product[] = [];
+  @Output() loadMore = new EventEmitter();
+  // @Input() productId : string | null = null
+  @Input() 
+  set productId(id : string | null){
+    if(id) this.showProductDetailInfo(id)
+    this.showProductDetail = true
+  }
+
+ 
   constructor(private storeService: StoreService) {
     this.myShoppingCart = this.storeService.getShoppingCart();
   }
 
   ngOnInit(): void {
-    this.storeService.getAllProducts().subscribe((data) => {
-      this.productos = data;
-      console.log('productos : ', this.productos);
-    });
-    console.log('productos : ', this.productos);
+    // this.storeService.getAllProducts().subscribe((data) => {
+    //   this.productos = data;
+    //   console.log('productos : ', this.productos);
+    // });
   }
 
   onAddToShoppingCart(product: Product) {
@@ -51,6 +60,7 @@ export class ProductsComponent implements OnInit {
   }
 
   showProductDetailInfo(id: string) {
+    if(!this.showProductDetail) this.showProductDetail = true
     this.storeService.getProduct(id).subscribe((data) => {
       console.log(data);
       this.toggleProductDetail();
@@ -85,4 +95,9 @@ export class ProductsComponent implements OnInit {
         this.productos[productIndex] = data;
       });
   }
+
+  onLoadMore(){
+    this.loadMore.emit()
+  }
+
 }

@@ -3,27 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductComponent } from './components/product/product.component';
-import { ProductsComponent } from './components/products/products.component';
-import { HeaderComponent } from './components/header/header.component';
 
-import { HttpClientModule , HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoginComponent } from './components/login/login.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TimeInterceptor } from './interceptors/time.interceptor';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+
+import { QuicklinkModule, QuicklinkStrategy } from 'ngx-quicklink';
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ProductComponent,
-    ProductsComponent,
-    HeaderComponent,
-    LoginComponent,
-  ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  declarations: [AppComponent, NotFoundComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, QuicklinkModule],
   providers: [
-    {provide : HTTP_INTERCEPTORS , useClass : TimeInterceptor, multi : true},
-    {provide : HTTP_INTERCEPTORS , useClass : TokenInterceptor , multi : true}
+    { provide: HTTP_INTERCEPTORS, useClass: TimeInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
